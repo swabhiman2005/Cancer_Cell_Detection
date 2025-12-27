@@ -1,0 +1,11 @@
+pandas
+numpy
+seaborn
+matplotlib
+scikit-learn
+dill
+python-dotenv
+flask       # Agar app.py mein Flask use karenge
+# ya 
+streamlit   # Agar dashboard jaisa interface chahte hain
+-e .
