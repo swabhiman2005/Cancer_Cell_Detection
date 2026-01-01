@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Breast Cancer Prediction("Cancer Cell Detection")</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; padding: 20px; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; border-bottom: 2px solid #007bff; padding-bottom: 10px; }
+        h3 { color: #007bff; margin-top: 20px; border-left: 5px solid #007bff; padding-left: 10px; }
+        .grid-container { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 15px; }
+        .form-group { margin-bottom: 10px; }
+        label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .btn { width: 100%; padding: 15px; background: #28a745; color: white; border: none; border-radius: 8px; cursor: pointer; font-size: 18px; margin-top: 30px; transition: 0.3s; }
+        .btn:hover { background: #218838; }
+        .result { margin-top: 20px; text-align: center; padding: 20px; background: #e9ecef; border-radius: 8px; font-size: 20px; font-weight: bold; color: #d9534f; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Breast Cancer Diagnostic Form</h2>
+    <form action="{{ url_for('predict_datapoint')}}" method="POST">
+        
+        <h3>Mean Values</h3>
+        <div class="grid-container">
+            <div class="form-group"><label>Mean Radius</label><input type="text" name="radius_mean" placeholder="0.0" required></div>
+            <div class="form-group"><label>Mean Texture</label><input type="text" name="texture_mean" placeholder="0.0" required></div>
+            <div class="form-group"><label>Mean Perimeter</label><input type="text" name="perimeter_mean" placeholder="0.0" required></div>
+            <div class="form-group"><label>Mean Area</label><input type="text" name="area_mean" placeholder="0.0" required></div>
+            <div class="form-group"><label>Mean Smoothness</label><input type="text" name="smoothness_mean" placeholder="0.0" required></div>
+            <div class="form-group"><label>Mean Compactness</label><input type="text" name="compactness_mean" placeholder="0.0" required></div>
+            <div class="form-group"><label>Mean Concavity</label><input type="text" name="concavity_mean" placeholder="0.0" required></div>
+            <div class="form-group"><label>Mean Concave Points</label><input type="text" name="concave points_mean" placeholder="0.0" required></div>
+            <div class="form-group"><label>Mean Symmetry</label><input type="text" name="symmetry_mean" placeholder="0.0" required></div>
+            <div class="form-group"><label>Mean Fractal Dim.</label><input type="text" name="fractal_dimension_mean" placeholder="0.0" required></div>
+        </div>
+
+        <h3>Standard Error (SE)</h3>
+        <div class="grid-container">
+            <div class="form-group"><label>Radius SE</label><input type="text" name="radius_se" placeholder="0.0" required></div>
+            <div class="form-group"><label>Texture SE</label><input type="text" name="texture_se" placeholder="0.0" required></div>
+            <div class="form-group"><label>Perimeter SE</label><input type="text" name="perimeter_se" placeholder="0.0" required></div>
+            <div class="form-group"><label>Area SE</label><input type="text" name="area_se" placeholder="0.0" required></div>
+            <div class="form-group"><label>Smoothness SE</label><input type="text" name="smoothness_se" placeholder="0.0" required></div>
+            <div class="form-group"><label>Compactness SE</label><input type="text" name="compactness_se" placeholder="0.0" required></div>
+            <div class="form-group"><label>Concavity SE</label><input type="text" name="concavity_se" placeholder="0.0" required></div>
+            <div class="form-group"><label>Concave Points SE</label><input type="text" name="concave points_se" placeholder="0.0" required></div>
+            <div class="form-group"><label>Symmetry SE</label><input type="text" name="symmetry_se" placeholder="0.0" required></div>
+            <div class="form-group"><label>Fractal Dim. SE</label><input type="text" name="fractal_dimension_se" placeholder="0.0" required></div>
+        </div>
+
+        <h3>Worst (Largest) Values</h3>
+        <div class="grid-container">
+            <div class="form-group"><label>Worst Radius</label><input type="text" name="radius_worst" placeholder="0.0" required></div>
+            <div class="form-group"><label>Worst Texture</label><input type="text" name="texture_worst" placeholder="0.0" required></div>
+            <div class="form-group"><label>Worst Perimeter</label><input type="text" name="perimeter_worst" placeholder="0.0" required></div>
+            <div class="form-group"><label>Worst Area</label><input type="text" name="area_worst" placeholder="0.0" required></div>
+            <div class="form-group"><label>Worst Smoothness</label><input type="text" name="smoothness_worst" placeholder="0.0" required></div>
+            <div class="form-group"><label>Worst Compactness</label><input type="text" name="compactness_worst" placeholder="0.0" required></div>
+            <div class="form-group"><label>Worst Concavity</label><input type="text" name="concavity_worst" placeholder="0.0" required></div>
+            <div class="form-group"><label>Worst Concave Points</label><input type="text" name="concave points_worst" placeholder="0.0" required></div>
+            <div class="form-group"><label>Worst Symmetry</label><input type="text" name="symmetry_worst" placeholder="0.0" required></div>
+            <div class="form-group"><label>Worst Fractal Dim.</label><input type="text" name="fractal_dimension_worst" placeholder="0.0" required></div>
+        </div>
+
+        <button type="submit" class="btn">Predict Cancer Type</button>
+    </form>
+
+    {% if results %}
+    <div class="result">
+        Prediction Result: {{results}}
+    </div>
+    {% endif %}
+</div>
+
+</body>
+</html>
