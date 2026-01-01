@@ -37,18 +37,16 @@ def evaluate_models(X_train, y_train, X_test, y_test, models, param):
         report = {}
 
         for i in range(len(list(models))):
-            model = list(models.keys())[i]
             model = list(models.values())[i]
-
-            #para = param[list(models.keys())[i]]
+            para = param[list(models.keys())[i]]
 
             # Initialize GridSearchCV to find the best hyperparameters
-            #logging.info(f"Started Hyperparameter tuning for: {list(models.keys())[i]}")
-            #gs = GridSearchCV(model, para, cv=3)
-            #gs.fit(X_train, y_train)
+            logging.info(f"Started Hyperparameter tuning for: {list(models.keys())[i]}")
+            gs = GridSearchCV(model, para, cv=3)
+            gs.fit(X_train, y_train)
 
             # Re-train the model using the best found parameters
-           # model.set_params(**gs.best_params_)
+            model.set_params(**gs.best_params_)
             model.fit(X_train, y_train)
 
             # Make predictions on the test dataset
