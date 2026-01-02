@@ -3,7 +3,7 @@ import sys
 from dataclasses import dataclass
 from src.logger import logging
 
-# Inhe aap add kar sakte hain Classification ke liye
+# Inhe add karte hain Classification ke liye
 from sklearn.ensemble import (
     AdaBoostClassifier,
     GradientBoostingClassifier,
